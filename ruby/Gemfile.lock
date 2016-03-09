@@ -1,0 +1,13 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    funkify (0.0.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  funkify
+
+BUNDLED WITH
+   1.10.3
