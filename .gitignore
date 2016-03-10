@@ -1,1 +1,7 @@
 .*.sw*
+
+.vs/
+obj/
+bin/
+
+project.lock.json

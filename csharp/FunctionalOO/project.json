@@ -1,0 +1,11 @@
+﻿{
+  "dependencies": {
+    "MethodToDelegate": "0.3.0"
+  },
+  "frameworks": {
+    "net46": { }
+  },
+  "runtimes": {
+    "win": { }
+  }
+}
