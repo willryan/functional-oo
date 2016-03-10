@@ -1,5 +1,25 @@
 require 'pry'
 
+Case1 = Class.new
+Case2 = Struct.new :foo
+Case3 = Struct.new :bar, :baz
+
+def longhand(adt)
+  case adt
+  when Case1
+    1
+  when Case2
+    adt.foo
+  when Case3
+    adt.bar * adt.baz
+  end
+end
+
+p (longhand Case2.new 5)
+p (longhand Case1.new)
+p (longhand Case3.new 2, 7)
+
+###################
 
 AdtPattern = Struct.new :klass, :lambda
 
