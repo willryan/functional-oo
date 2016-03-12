@@ -2,40 +2,50 @@ require 'pry'
 require 'funkify'
 require_relative 'monad'
 
+class Array
+  def rest
+    self[1..-1]
+  end
+end
+
+class Lang
+  def self.english
+    ['zero', 'one', 'two', 'three', 'four', 'five']
+  end
+  def self.spanish
+    ['cero', 'uno', 'dos', 'tres', 'quatro', 'cinco']
+  end
+end
+
 class StateFuncs
   include Funkify
 
   auto_curry
-  def add(num, env, state)
-    if state < 5
-      [Choice.success(env+state+1), num+state]
+  def unpack(base, language, state)
+    modded = state.first % base
+    if (modded > 5)
+      [Choice.failure('too big'), state.rest]
     else
-      Choice.failure "and i'm out"
-    end
-  end
-  def mult(num, env, state)
-    if state % 3 == 0
-      Choice.failure "no threes"
-    else
-      [env+state*2, num*state]
+      v = Lang.send(language)[modded]
+      [Choice.success(v), state.rest]
     end
   end
 end
 
-def state_func
+def state_func(language, bytes)
   sf = StateFuncs.new
-  ret = Monad.reader_state_choice(1, 2) do |m|
-    x = m.bind (sf.add 5)
-    y = m.bind (sf.mult 3)
-    m.bind (x + y)
+  Monad.reader_state_choice(language, bytes) do |m|
+    x = m.bind (sf.unpack 4)
+    y = m.bind (sf.unpack 9)
+    z = m.bind (sf.unpack 3)
+    m.bind "#{x}, #{y}, #{z}"
   end
-  puts "result: #{ret} == 19"
 end
 
 describe 'reader state choice monad' do
   it 'handles correct cases' do
-    pending
-    raise 'not yet'
+    expect(state_func(:english, [6,11,8]).success_value).to eq("one, three, five")
+    expect(state_func(:spanish, [6,11,8]).success_value).to eq("uno, tres, cinco")
   end
 
   it 'stops early' do
