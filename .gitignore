@@ -3,5 +3,6 @@
 .vs/
 obj/
 bin/
+tags
 
 project.lock.json
