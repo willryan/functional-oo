@@ -1,9 +1,20 @@
-require 'factorygirl'
+require 'factory_girl'
 
-factory(:person) do
-  name "Billy Smith"
-  age 25
-  spouse
+FactoryGirl.define do
+  factory(:person) do
+    name "Billy Smith"
+    age 25
+    spouse
+  end
+end
+
+include FactoryGirl::Syntax::Methods
+
+describe 'factory' do
+  it 'will work' do
+    pending
+    raise 'todo'
+  end
 end
 
 ###############
@@ -14,4 +25,9 @@ end"
 
 ast = RubyVM::InstructionSequence.compile code
 
-# TODO
+describe 'ast' do
+  it 'will work' do
+    pending
+    raise 'todo'
+  end
+end
