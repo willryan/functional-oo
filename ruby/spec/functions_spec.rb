@@ -1,5 +1,6 @@
 require 'functions'
-require 'mocha/test_unit'
+require 'mocha/api'
+include Mocha::API
 
 describe 'function tests' do
   describe "#another_pure_function" do
