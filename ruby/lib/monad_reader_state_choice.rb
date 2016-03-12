@@ -1,23 +1,9 @@
 require 'pry'
 require 'funkify'
-require_relative 'monad'
+require 'monad'
+require 'util'
 
-class Array
-  def rest
-    self[1..-1]
-  end
-end
-
-class Lang
-  def self.english
-    ['zero', 'one', 'two', 'three', 'four', 'five']
-  end
-  def self.spanish
-    ['cero', 'uno', 'dos', 'tres', 'quatro', 'cinco']
-  end
-end
-
-class StateFuncs
+class ReaderStateChoiceFuncs
   include Funkify
 
   auto_curry
@@ -30,26 +16,19 @@ class StateFuncs
       [Choice.success(v), state.rest]
     end
   end
+
 end
 
-def state_func(language, bytes)
-  sf = StateFuncs.new
-  Monad.reader_state_choice(language, bytes) do |m|
-    x = m.bind (sf.unpack 4)
-    y = m.bind (sf.unpack 9)
-    z = m.bind (sf.unpack 3)
-    m.bind "#{x}, #{y}, #{z}"
-  end
-end
-
-describe 'reader state choice monad' do
-  it 'handles correct cases' do
-    expect(state_func(:english, [6,11,8]).success_value).to eq("one, three, five")
-    expect(state_func(:spanish, [6,11,8]).success_value).to eq("uno, tres, cinco")
-  end
-
-  it 'stops early' do
-    pending
-    raise 'not yet'
+class ReaderStateChoiceExample
+  class << self
+    def state_func(language, bytes)
+      sf = ReaderStateChoiceFuncs.new
+      Monad.reader_state_choice(language, bytes) do |m|
+        x = m.bind (sf.unpack 4)
+        y = m.bind (sf.unpack 9)
+        z = m.bind (sf.unpack 3)
+        m.bind "#{x}, #{y}, #{z}"
+      end
+    end
   end
 end
