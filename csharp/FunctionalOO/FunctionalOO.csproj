@@ -41,12 +41,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdtLonghand.cs" />
+    <Compile Include="AdtOneOf.cs" />
+    <Compile Include="Immutable.cs" />
+    <Compile Include="LinqComposition.cs" />
     <Compile Include="FirstClass.cs" />
+    <Compile Include="MockAsIfImmutable.cs" />
+    <Compile Include="MonadLibrary.cs" />
+    <Compile Include="MonadLonghand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StandardDependencyInjection.cs" />
+    <Compile Include="UseFSharpAdt.cs" />
+    <Compile Include="UseFSharpRecord.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dependencies\Dependencies.fsproj">
+      <Project>{56d42763-0ea8-444a-894f-7a53552b6da4}</Project>
+      <Name>Dependencies</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

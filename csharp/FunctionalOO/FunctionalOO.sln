@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionalOO", "FunctionalOO.csproj", "{021349B3-EC18-4529-B849-329BAA7565EC}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Dependencies", "..\Dependencies\Dependencies.fsproj", "{56D42763-0EA8-444A-894F-7A53552B6DA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{021349B3-EC18-4529-B849-329BAA7565EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021349B3-EC18-4529-B849-329BAA7565EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021349B3-EC18-4529-B849-329BAA7565EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56D42763-0EA8-444A-894F-7A53552B6DA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56D42763-0EA8-444A-894F-7A53552B6DA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56D42763-0EA8-444A-894F-7A53552B6DA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56D42763-0EA8-444A-894F-7A53552B6DA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
