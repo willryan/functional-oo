@@ -2,12 +2,29 @@ GEM
   remote: https://rubygems.org/
   specs:
     concurrent-ruby (1.0.1)
+    diff-lcs (1.2.5)
     funkify (0.0.4)
     hamster (3.0.0)
       concurrent-ruby (~> 1.0)
     hamsterdam (1.0.11)
       hamster
+    metaclass (0.0.4)
+    mocha (1.1.0)
+      metaclass (~> 0.0.1)
     piece_pipe (0.2.1)
+    rspec (3.3.0)
+      rspec-core (~> 3.3.0)
+      rspec-expectations (~> 3.3.0)
+      rspec-mocks (~> 3.3.0)
+    rspec-core (3.3.1)
+      rspec-support (~> 3.3.0)
+    rspec-expectations (3.3.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-mocks (3.3.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.3.0)
+    rspec-support (3.3.0)
 
 PLATFORMS
   ruby
@@ -16,7 +33,9 @@ DEPENDENCIES
   funkify
   hamster
   hamsterdam
+  mocha
   piece_pipe
+  rspec
 
 BUNDLED WITH
    1.10.3

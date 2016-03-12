@@ -32,4 +32,14 @@ def state_func
   puts "result: #{ret} == 19"
 end
 
-state_func
+describe 'reader state choice monad' do
+  it 'handles correct cases' do
+    pending
+    raise 'not yet'
+  end
+
+  it 'stops early' do
+    pending
+    raise 'not yet'
+  end
+end

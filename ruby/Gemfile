@@ -4,4 +4,5 @@ gem 'funkify'
 gem 'piece_pipe'
 gem 'hamster'
 gem 'hamsterdam'
-
+gem 'rspec'
+gem 'mocha'
