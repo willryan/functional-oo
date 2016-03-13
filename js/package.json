@@ -9,7 +9,11 @@
     "babel-preset-es2015": "^6.6.0",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.7.2",
-    "immutable": "^3.7.6",
     "regenerator": "^0.8.42"
+  },
+  "dependencies": {
+    "adt": "^0.7.2",
+    "immutable": "^3.7.6",
+    "monet": "^0.8.7"
   }
 }

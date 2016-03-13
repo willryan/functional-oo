@@ -32,7 +32,41 @@ describe('composition', () => {
   });
 });
 
+const registry = {
+  add(x, y) {
+    return x + y;
+  },
+  mult(x, y) {
+    return x * y;
+  },
+  sqrt(x) {
+    return Math.sqrt(x);
+  },
+  get(name) {
+    return this[name];
+  },
+  service() { return 'SPECIALVALUE'; },
+  provideServices(obj) {
+    for (const k in obj) {
+      if (obj[k] == this.service()) {
+        obj[k] = this.get(k);
+      }
+    }
+  }
+};
+
 describe('DI example', () => {
-  xit('shows partial application through IOC', () => {
+  it('shows partial application through IOC', () => {
+    const mathFuncs = {
+      add: registry.service(),
+      mult: registry.service(),
+      sqrt: registry.service(),
+      pythag(x,y) {
+        return this.sqrt(this.add(this.mult(x,x),this.mult(y,y)));
+      }
+    }
+    registry.provideServices(mathFuncs);
+
+    expect(mathFuncs.pythag(3.0,4.0)).toBe(5.0);
   });
 });

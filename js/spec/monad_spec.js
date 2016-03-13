@@ -1,26 +1,22 @@
 //  yield abuse
 require('babel-polyfill');
 
-function Just(value) {
-  this.value = value;
-}
+const m = require('monet');
+const Maybe = m.Maybe;
 
-Just.prototype.bind = function(transform) {
-  return transform(this.value);
-};
-
-Just.prototype.toString = function() {
-  return 'Just(' +  this.value + ')';
-};
-
-const Nothing = {
-  bind: function() {
-    return this;
-  },
-  toString: function() {
-    return 'Nothing';
+const factor = function (num, mod) {
+  if (num % mod == 0) {
+    return Maybe.Just(num / mod);
+  } else {
+    return Maybe.Nothing();
   }
 };
+const factors = function (num) {
+  return new Maybe.Just(num).bind(x =>
+    factor(x, 2).bind(y =>
+      factor(y, 3).bind(z =>
+        factor(z, 5))));
+}
 
 function doM(gen) {
   function step(value) {
@@ -33,50 +29,28 @@ function doM(gen) {
   return step();
 }
 
-const factor = function (num, mod) {
-  if (num % mod == 0) {
-    return new Just(num / mod);
-  } else {
-    return Nothing;
-  }
-};
-
-const factors = function (num) {
-  return new Just(num).bind(x =>
-    factor(x, 2).bind(y =>
-      factor(y, 3).bind(z =>
-        factor(z, 5))));
-}
-
 const factorsM = function (num) {
   return doM(function*() {
-    var x = yield new Just(num);
+    var x = yield Maybe.Just(num);
     var y = yield factor(x, 2);
     var z = yield factor(y, 3);
     return factor(z, 5);
   }());
 }
-
-describe('maybe monad', () => {
-  it('binds', () => {
-    expect(factors(1)).toBe(Nothing);
-    expect(factors(4)).toBe(Nothing);
-    expect(factors(15)).toBe(Nothing);
-    expect(factors(30).value).toBe(1);
-    expect(factors(420).value).toBe(14);
+describe('monet', () => {
+  it('is another way to do monads', () => {
+    expect(factors(1).isNothing()).toBe(true);
+    expect(factors(4).isNothing()).toBe(true);
+    expect(factors(15).isNothing()).toBe(true);
+    expect(factors(30).just()).toBe(1);
+    expect(factors(420).just()).toBe(14);
   });
 
   it('can use syntactic sugar', () => {
-    expect(factorsM(420).value).toBe(14);
-    expect(factorsM(30).value).toBe(1);
-    expect(factorsM(1)).toBe(Nothing);
-    expect(factorsM(4)).toBe(Nothing);
-    expect(factorsM(15)).toBe(Nothing);
-  });
-});
-
-//  monet?
-describe('monet', () => {
-  xit('is another way to do monads', () => {
+    expect(factorsM(420).just()).toBe(14);
+    expect(factorsM(30).just()).toBe(1);
+    expect(factorsM(1).isNothing()).toBe(true);
+    expect(factorsM(4).isNothing()).toBe(true);
+    expect(factorsM(15).isNothing()).toBe(true);
   });
 });
