@@ -14,3 +14,8 @@ describe('immutability', () => {
   });
 });
 
+describe('freeze()', () => {
+  xit('hopefully stops changes', () => {
+  });
+});
+

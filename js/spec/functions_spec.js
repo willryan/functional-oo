@@ -13,9 +13,26 @@ describe('bind', () => {
 });
 
 // composition
+function lCompose(func1, func2) {
+  return function() {
+    return func1(func2.apply(undefined, arguments));
+  };
+}
+
+function rCompose(func2, func1) {
+  return lCompose(func1, func2);
+}
+
 describe('composition', () => {
-  xit('can compose', () => {
-    //const add2Mult2 = compose(add2, mult);
+  it('can compose', () => {
+    const add2Mult2 = rCompose(add2, mult2);
+    expect(add2Mult2(3)).toBe(10);
+    const mult2Add2 = lCompose(add2, mult2);
+    expect(mult2Add2(3)).toBe(8);
   });
 });
 
+describe('DI example', () => {
+  xit('shows partial application through IOC', () => {
+  });
+});
