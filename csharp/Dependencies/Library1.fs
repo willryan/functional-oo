@@ -12,4 +12,15 @@ type ImmRecord =
      Z : bool
   }
 
+module Funcs =
+  let gimmeAString = function
+    | Foo v -> v.ToString()
+    | _ -> "not a FOO"
+
+  let allCases = function
+    | Foo v -> v.ToString()
+    | Bar v -> v.ToUpper()
+    | Baz -> "Bazazaz"
+
+
   
