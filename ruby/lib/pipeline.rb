@@ -28,29 +28,19 @@ end
 ##########
 
 class UseFunkify
-  include Funkify
-
-  auto_curry
-  def add(x, y)
-    x + y
-  end
-
-  def mult(x, y)
-    x * y
+  class << self
+    include Funkify
+    auto_curry def add(x, y) x + y end
+    auto_curry def mult(x, y) x * y end
   end
 end
 
 class FunkifyTemperature
   include Funkify
 
-  def initialize
-    @funcs = UseFunkify.new
-  end
-
   def celsius_to_farenheit(temp)
     pass(temp) >=
-      @funcs.mult(9/5.0) |
-      @funcs.add(32.0)
+      UseFunkify.mult(9/5.0) |
+      UseFunkify.add(32.0)
   end
-
 end
