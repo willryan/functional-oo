@@ -9,15 +9,15 @@ namespace FunctionalOO
 {
     public class ImmData1
     {
-        public string Foo { get; }
-        public int Bar { get; }
-        public bool Baz { get; }
+        public string X { get; }
+        public int Y { get; }
+        public bool Z { get; }
 
-        public ImmData1(string foo, int bar, bool baz)
+        public ImmData1(string x, int y, bool z)
         {
-            Foo = foo;
-            Bar = bar;
-            Baz = baz;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         public override bool Equals(object obj)
@@ -27,16 +27,16 @@ namespace FunctionalOO
 
         protected bool Equals(ImmData1 other)
         {
-            return other != null && string.Equals(Foo, other.Foo) && Bar == other.Bar && Baz == other.Baz;
+            return other != null && string.Equals(X, other.X) && Y == other.Y && Z == other.Z;
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                var hashCode = Foo?.GetHashCode() ?? 0;
-                hashCode = (hashCode*397) ^ Bar;
-                hashCode = (hashCode*397) ^ Baz.GetHashCode();
+                var hashCode = X?.GetHashCode() ?? 0;
+                hashCode = (hashCode*397) ^ Y;
+                hashCode = (hashCode*397) ^ Z.GetHashCode();
                 return hashCode;
             }
         }
@@ -44,17 +44,17 @@ namespace FunctionalOO
 
     public static class ImmutableExtensions
     {
-        public static ImmData1 With(this ImmData1 orig, string foo)
+        public static ImmData1 With(this ImmData1 orig, string x)
         {
-            return new ImmData1(foo, orig.Bar, orig.Baz);
+            return new ImmData1(x, orig.Y, orig.Z);
         }
-        public static ImmData1 With(this ImmData1 orig, int bar)
+        public static ImmData1 With(this ImmData1 orig, int y)
         {
-            return new ImmData1(orig.Foo, bar, orig.Baz);
+            return new ImmData1(orig.X, y, orig.Z);
         }
-        public static ImmData1 With(this ImmData1 orig, bool baz)
+        public static ImmData1 With(this ImmData1 orig, bool z)
         {
-            return new ImmData1(orig.Foo, orig.Bar, baz);
+            return new ImmData1(orig.X, orig.Y, z);
         }
     }
 
@@ -65,7 +65,7 @@ namespace FunctionalOO
         public void ChainingTest()
         {
             var obj = new ImmData1("hello", 1, true);
-            var obj2 = obj.With(baz: false).With(foo: "yeah");
+            var obj2 = obj.With(z: false).With(x: "yeah");
             Assert.That(obj, Is.Not.EqualTo(obj2));
             Assert.That(obj2, Is.EqualTo(new ImmData1("yeah", 1, false)));
         }
