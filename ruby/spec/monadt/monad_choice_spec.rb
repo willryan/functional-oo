@@ -1,4 +1,4 @@
-require 'monad_choice'
+require 'monadt/monad_choice'
 
 describe 'choice monad' do
   it 'handles correct cases' do

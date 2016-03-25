@@ -1,4 +1,4 @@
-require 'monad_state'
+require 'monadt/monad_state'
 
 describe 'state monad' do
   it 'can do deserialization' do

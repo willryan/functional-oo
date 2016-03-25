@@ -1,4 +1,4 @@
-require 'monad_list'
+require 'monadt/monad_list'
 
 describe 'list monad' do
   xit 'tries all the possibilities' do

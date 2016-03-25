@@ -1,6 +1,6 @@
 require 'pry'
 require 'funkify'
-require 'monad'
+require_relative 'monad'
 require 'util'
 
 module Monadt

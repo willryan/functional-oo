@@ -1,4 +1,4 @@
-require 'monad_reader_state_choice'
+require 'monadt/monad_reader_state_choice'
 
 describe 'reader state choice monad' do
   it 'handles correct cases' do

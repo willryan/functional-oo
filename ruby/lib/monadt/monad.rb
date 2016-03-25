@@ -1,7 +1,7 @@
-require 'maybe'
-require 'either'
-require 'state'
-require 'reader_state_either'
+require_relative 'maybe'
+require_relative 'either'
+require_relative 'state'
+require_relative 'reader_state_either'
 
 class List
   class << self

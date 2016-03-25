@@ -1,4 +1,4 @@
-require 'monad_maybe'
+require 'monadt/monad_maybe'
 
 describe 'maybe monad' do
   it 'handles correct cases' do
