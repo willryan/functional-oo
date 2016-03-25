@@ -1,133 +1,78 @@
-require 'pry'
+require 'maybe'
+require 'either'
+require 'state'
+require 'reader_state_either'
 
-class Enumerator::Yielder
-  alias bind yield
-end
-
-class Choice
-  attr_reader :success_value, :failure_value
-
-  def is_success
-    @success_value != nil
-  end
-
-  def self.success(val)
-    Choice.new val, nil
-  end
-
-  def self.failure(val)
-    Choice.new nil, val
-  end
-
-  def to_s
-    if is_success
-      "success: #{success_value}"
-    else
-      "failure: #{failure_value}"
-    end
-  end
-
-  private
-  def initialize(success_value, failure_value)
-    @success_value = success_value
-    @failure_value = failure_value
-  end
-end
-
-class Monad
+class List
   class << self
-
-    def maybe(&blk)
-      e = Enumerator.new(&blk)
-      e.each do |itm|
-        if itm == nil
-          break
-        else
-          itm
-        end
-      end
+    def bind(m, &blk)
+      m.flat_map(&blk)
     end
 
-    def state(initial_state, &blk)
-      e = Enumerator.new(&blk)
-      state = initial_state
-      e.each do |itm|
-        unless itm.is_a? Proc
-          raw_value = itm
-          itm = ->(st) { [raw_value, st] }
-        end
-        value, state = itm.call(state)
-        value
-      end
+    def return(a)
+      [a]
     end
+  end
+end
 
-    def reader(env, &blk)
-      e = Enumerator.new(&blk)
-      e.each do |itm|
-        itm.call(env)
+class MonadObj
+  def initialize(klass, yielder)
+    @yielder = yielder
+    @klass = klass
+  end
+
+  def return(val)
+    @klass.return val
+  end
+
+  def bind(val)
+    @yielder.yield val
+  end
+end
+
+module Monadt
+  class Monad
+    class << self
+      def doM(klass, &blk)
+        e = Enumerator.new do |y|
+          m_obj = MonadObj.new klass, y
+          blk.call(m_obj)
+        end
+        magic_thing(klass, e)
       end
-    end
 
-    def reader_state_choice(env, initial_state, &blk)
-      e = Enumerator.new(&blk)
-      acc = nil
-      state = initial_state
-      e.each do |itm_f|
-        if itm_f.is_a? Proc
-          itm, state = itm_f.call(env, state)
-        else
-          itm = itm_f
-        end
-        unless itm.is_a? Choice
-          itm = Choice.success itm
-        end
-        acc = itm
-        if itm.is_success
-          itm.success_value
-        else
-          break
-        end
-      end
-      acc
-    end
-
-    def choice(&blk)
-      e = Enumerator.new(&blk)
-      acc = nil
-      e.each do |itm|
-        unless itm.is_a? Choice
-          itm = Choice.success itm
-        end
-        acc = itm
-        if itm.is_success
-          itm.success_value
-        else
-          break
-        end
-      end
-      acc
-    end
-
-    def choice2(&blk)
-      e = Enumerator.new(&blk)
-      acc = nil
-      while true
+      def magic_thing(klass, e)
         begin
-          itm = e.next_values[0]
-        rescue StopIteration
-          return $!.result
+          ma = e.next
+        rescue StopIteration => ex
+          return ex.result
         end
-        unless itm.is_a? Choice
-          itm = Choice.success itm
+        klass.bind(ma) do |a|
+          e.feed a
+          magic_thing(klass, e)
         end
-        acc = itm
-        if !acc.is_success
-          return acc
-        end
-        y = yield(acc.success_value)
-        e.feed y
       end
-      acc
+
+      def maybe(&blk)
+        doM(Maybe, &blk)
+      end
+
+      def either(&blk)
+        doM(Either, &blk)
+      end
+
+      def state(initial_state, &blk)
+        f = doM(State, &blk)
+        f.(initial_state).first
+      end
+
+      def reader(env, &blk)
+        doM(Reader, &blk).(env)
+      end
+
+      def reader_state_choice(env, initial_state, &blk)
+        doM(ReaderStateEither, &blk).(env, initial_state).first
+      end
     end
   end
 end
