@@ -1,5 +1,6 @@
 ﻿using System;
 using MethodToDelegate;
+using MethodToDelegate.PartialApplication;
 using Moq;
 using NUnit.Framework;
 

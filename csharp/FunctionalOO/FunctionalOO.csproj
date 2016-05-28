@@ -44,13 +44,13 @@
   <ItemGroup>
     <Compile Include="AdtLonghand.cs" />
     <Compile Include="AdtOneOf.cs" />
-    <Compile Include="DelegateIOC.cs" />
+    <Compile Include="MethodToDelegate_Return.cs" />
     <Compile Include="Expr.cs" />
     <Compile Include="FuncComposition.cs" />
     <Compile Include="Immutable.cs" />
     <Compile Include="LinqComposition.cs" />
     <Compile Include="FirstClass.cs" />
-    <Compile Include="MethodToDelegateExample.cs" />
+    <Compile Include="MethodToDelegate_Partial.cs" />
     <Compile Include="MockAsIfImmutable.cs" />
     <Compile Include="MonadLibrary.cs" />
     <Compile Include="MonadLonghand.cs" />
