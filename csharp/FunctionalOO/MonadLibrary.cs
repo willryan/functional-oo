@@ -23,25 +23,17 @@ namespace FunctionalOO
         private static Either<Exception, int> SucceedIfOverFive(double value)
         {
             if (value > 5.0)
-            {
                 return () => (int) (value - 5.0);
-            }
             else
-            {
                 return () => new Exception("too low");
-            }
         }
 
         private static Either<Exception, string> SucceedIfEven(int value)
         {
             if (value%2 == 0)
-            {
                 return () => (value/2).ToString();
-            }
             else
-            {
                 return () => new Exception("uneven");
-            }
             
         }
     }
