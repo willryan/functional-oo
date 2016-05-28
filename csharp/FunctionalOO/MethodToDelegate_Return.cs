@@ -5,7 +5,6 @@ using NUnit.Framework;
 namespace FunctionalOO
 {
     public delegate string PythagS(string x, string y);
-
     //[DI Attribute]
     public static class Funcs
     {
@@ -30,7 +29,7 @@ namespace FunctionalOO
                 sqrtF(addF(multF(x, x), multF(y, y)));
 
         public static PythagS PythagSr(Pythag py, ParseDouble parse, DoubleToString tos) => 
-            (x, y) => 
+            (string x, string y) => 
                 tos(py(parse(x), parse(y)));
     }
 
