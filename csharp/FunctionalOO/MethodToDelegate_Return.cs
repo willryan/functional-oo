@@ -17,11 +17,8 @@ namespace FunctionalOO
 
         public static Add AddF() => (x, y) => x + y;
         public static Mult MultF => (x, y) => x * y;
-
         public static Sqrt SqrtF() => Math.Sqrt;
-
         public static ParseDouble ParseDoubleF() => Double.Parse;
-
         public static DoubleToString DoubleToStringF() => d => d.ToString();
 
         public static Pythag Pythagr(Add addF, Mult multF, Sqrt sqrtF) => 
